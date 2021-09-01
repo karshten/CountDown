@@ -1,17 +1,12 @@
-var startDateTime = new Date(2021, 8, 1, 20);
+const startDateTime = new Date(2021, 7, 1, 22, 30, 10, );
+const days = document.querySelector("#timer-days-value"); const hours = document.querySelector("#timer-hours-value"); const minutes = document.querySelector("#timer-minutes-value"); const seconds = document.querySelector("#timer-seconds-value");
+const timerContainer = document.getElementById("counterTimer");
 
-var days = document.querySelector("#timer-days-value");
-var hours = document.querySelector("#timer-hours-value");
-var minutes = document.querySelector("#timer-minutes-value");
-var seconds = document.querySelector("#timer-seconds-value");
-
-var timerContainer = document.getElementById("counterTimer");
-
-var cancelInterval;
+let cancelInterval;
 
 cancelInterval = setInterval(function () {
-  var currentDateTime = new Date();
-  var diffDateTime = startDateTime - currentDateTime;
+  const currentDateTime = new Date();
+  const diffDateTime = startDateTime - currentDateTime;
 
   if (diffDateTime > 0) {
     days.innerHTML = Math.floor(diffDateTime / (1000 * 60 * 60 * 24));
@@ -23,15 +18,14 @@ cancelInterval = setInterval(function () {
     );
     seconds.innerHTML = Math.floor((diffDateTime % (1000 * 60)) / 1000);
   } else {
-    var newDiv = document.createElement("div");
-    newDiv.innerText = `Курс уже стартовал ${dateTimeString(startDateTime)}`;
+    const newDiv = document.createElement("div");
+    newDiv.innerText = `Курс уже стартовал ${dateTimeString(startDateTime)} ${secondsToTime(startDateTime)}`;
     newDiv.classList.add("counter-big-text");
     timerContainer.innerHTML = "";
     timerContainer.appendChild(newDiv);
     clearInterval(cancelInterval);
   }
 }, 1000);
-
 //365 = 3 * 100 + 6 * 10 + 5 * 1
 //365 % 100 = 65 / 10 = 6.5 = 6
 
@@ -47,7 +41,7 @@ function convertMonthInWord(monthNum) {
     case 1:
       return "январь";
     case 8:
-      return "август";
+      return "августа";
     case 9:
       return "сентябрь";
     case 10:
@@ -56,3 +50,8 @@ function convertMonthInWord(monthNum) {
       break;
   }
 }
+ function secondsToTime(sec) {
+   return `${sec.getHours()} ${(
+       sec.getMinutes()
+   )} ${sec.getSeconds()}`;
+ }
